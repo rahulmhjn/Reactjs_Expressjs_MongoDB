@@ -9,10 +9,12 @@ export const AddTransaction = () => {
     e.preventDefault();
 
     var newTransaction = {
-      id: Math.floor(Math.random() * 100),
       text,
       amount: +amount,
     };
+
+    setAmount(0);
+    setText("");
 
     addTransaction(newTransaction);
   };
