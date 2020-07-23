@@ -5,7 +5,7 @@ const Transaction = require("../models/Transaction");
 // @access  public
 exports.getTransactions = async (req, res, next) => {
   try {
-    const transactions = await Transaction.find();
+    const transactions = await Transaction.find({ user: req.user._id });
 
     return res.status(200).json({
       success: true,
@@ -25,8 +25,9 @@ exports.getTransactions = async (req, res, next) => {
 // @access  public
 exports.addTransactions = async (req, res, next) => {
   const { text, amount } = req.body;
+  const newTransaction = { text, amount, user: req.user._id };
   try {
-    const transaction = await Transaction.create(req.body);
+    const transaction = await Transaction.create(newTransaction);
     return res.status(201).json({
       success: true,
       data: transaction,

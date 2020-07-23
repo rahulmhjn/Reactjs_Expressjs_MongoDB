@@ -6,6 +6,10 @@ const {
   deleteTransactions,
 } = require("../controllers/transacions");
 
+const requireAuth = require("../middlewares/requireAuth");
+
+router.use(requireAuth);
+
 router.route("/").get(getTransactions).post(addTransactions);
 
 router.route("/:id").delete(deleteTransactions);
