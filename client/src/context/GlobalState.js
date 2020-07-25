@@ -18,7 +18,13 @@ export const GlobalProvider = ({ children }) => {
   //Actions
   async function getTransactions() {
     try {
-      const res = await axios.get("/api/v1/transactions");
+      const token = await localStorage.getItem("token");
+      console.log("gcghcgh" + token);
+      const res = await axios.get("/api/v1/transactions", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       // console.log(res.data.data);
       dispatch({
         type: "GET_TRANSACTIONS",

@@ -1,23 +1,29 @@
 import React from "react";
 import { Header } from "./components/Header";
-import { Balance } from "./components/Balance";
-import { IncomeExpenses } from "./components/IncomeExpenses";
-import { TransactionList } from "./components/TransactionList";
-import { AddTransaction } from "./components/AddTransaction";
+
 import { GlobalProvider } from "./context/GlobalState";
 
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 import "./App.css";
+import MainScreen from "./screens/MainScreen";
+import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
+import { Provider as AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <GlobalProvider>
-      <Header />
-      <div className="container">
-        <Balance />
-        <IncomeExpenses />
-        <TransactionList />
-        <AddTransaction />
-      </div>
+      <AuthProvider>
+        <Router>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={MainScreen} />
+            <Route path="/login" component={LoginScreen} />
+            <Route path="/signup" component={SignupScreen} />
+          </Switch>
+        </Router>
+      </AuthProvider>
     </GlobalProvider>
   );
 }
