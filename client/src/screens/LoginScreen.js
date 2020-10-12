@@ -1,23 +1,29 @@
 import React, { useState, useContext } from "react";
-import { Context as AuthContext } from "../context/AuthContext";
+// import { Context as AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { GlobalContext } from "../context/GlobalState";
+import Message from "../components/Message";
 
-const LoginScreen = () => {
+const LoginScreen = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signin } = useContext(AuthContext);
+  const { error, signin } = useContext(GlobalContext);
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Sign In</h1>
+      {error && <Message variant="danger">{error}</Message>}
       <form
         onSubmit={(e) => {
           e.preventDefault();
           signin({ email, password });
+          if (!error) {
+            history.push("/home");
+          }
         }}
       >
         <div className="form-control">
-          <label htmlFor="text">Eamil</label>
+          <label htmlFor="text">Email</label>
           <input
             type="text"
             value={email}
@@ -37,7 +43,9 @@ const LoginScreen = () => {
         <button className="btn">Login</button>
       </form>
       <p>
-        <Link to="/signup">Don't have an account? Sign Up</Link>
+        <Link to="/signup">
+          Don't have an account? <b>Sign Up</b>
+        </Link>
       </p>
     </div>
   );

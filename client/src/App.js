@@ -18,8 +18,8 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            <Route exact path="/" component={MainScreen} />
-            <Route path="/login" component={LoginScreen} />
+            <Route exact path="/login" component={LoginScreen} />
+            <Route path="/home" component={MainScreen} />
             <Route path="/signup" component={SignupScreen} />
           </Switch>
         </Router>

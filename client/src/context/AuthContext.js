@@ -52,8 +52,8 @@ const signin = (dispatch) => {
 };
 
 const signout = (dispatch) => {
-  return async () => {
-    await localStorage.removeItem("token");
+  return () => {
+    localStorage.removeItem("token");
     dispatch({ type: "signout" });
     //    navigate('loginFlow');
   };

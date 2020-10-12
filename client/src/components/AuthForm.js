@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AuthForm = ({ headerText, errorMessage, onSubmit, bText }) => {
+const AuthForm = ({ headerText, error, onSubmit, bText }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -13,7 +13,7 @@ const AuthForm = ({ headerText, errorMessage, onSubmit, bText }) => {
       }}
     >
       <div className="form-control">
-        <label htmlFor="text">Eamil</label>
+        <label htmlFor="text">Email</label>
         <input
           type="text"
           value={email}

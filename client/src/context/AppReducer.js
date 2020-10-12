@@ -14,8 +14,21 @@ export default (state, action) => {
         ...state,
         transactions: [...state.transactions, action.payload],
       };
+
     case "TRANSACTION_ERROR":
       return { ...state, error: action.payload };
+
+    case "add_error":
+      return { ...state, error: action.payload };
+
+    // case 'signup':
+    //     return { ...state, token: action.payload, errorMessage: '' }
+    case "signin":
+      return { token: action.payload, error: "" };
+
+    case "signout":
+      return { token: null, error: "" };
+
     default:
       return state;
   }

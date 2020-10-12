@@ -6,6 +6,7 @@ const initialState = {
   transactions: [],
   error: null,
   loading: true,
+  token: null,
 };
 
 //create Context
@@ -75,15 +76,58 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  async function signup({ email, password, name }) {
+    try {
+      console.log("signup");
+      const response = await axios.post("/signup", { email, password, name });
+      console.log(response.data);
+      localStorage.setItem("token", response.data.token);
+      dispatch({ type: "signin", payload: response.data.token });
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: "add_error",
+        payload: "Something went wrong with signup",
+      });
+    }
+  }
+
+  async function signin({ email, password }) {
+    // make api request with that email and password
+    try {
+      const response = await axios.post("/signin", { email, password });
+      console.log(response.data);
+      localStorage.setItem("token", response.data.token);
+      dispatch({ type: "signin", payload: response.data.token });
+    } catch (err) {
+      dispatch({
+        type: "add_error",
+        payload: "Something went wrong with signin",
+      });
+    }
+  }
+
+  const signout = (dispatch) => {
+    return () => {
+      localStorage.removeItem("token");
+      dispatch({ type: "signout" });
+      //    navigate('loginFlow');
+    };
+  };
+
   return (
     <GlobalContext.Provider
       value={{
         transactions: state.transactions,
         error: state.error,
         loading: state.loading,
+        token: state.token,
         deleteTransaction,
         addTransaction,
         getTransactions,
+        signup,
+        signin,
+        signout,
       }}
     >
       {children}
