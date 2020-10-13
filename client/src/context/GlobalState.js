@@ -23,6 +23,7 @@ export const GlobalProvider = ({ children }) => {
       console.log("gcghcgh" + token);
       const res = await axios.get("/api/v1/transactions", {
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
@@ -41,8 +42,15 @@ export const GlobalProvider = ({ children }) => {
   }
 
   async function deleteTransaction(id) {
+    const token = await localStorage.getItem("token");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
     try {
-      await axios.delete(`/api/v1/transactions/${id}`);
+      await axios.delete(`/api/v1/transactions/${id}`, config);
 
       dispatch({
         type: "deleteTransaction",
@@ -57,9 +65,11 @@ export const GlobalProvider = ({ children }) => {
   }
 
   async function addTransaction(transaction) {
+    const token = await localStorage.getItem("token");
     const config = {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     };
     try {
